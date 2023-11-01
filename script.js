@@ -2,13 +2,10 @@ const URL = "https://65417e9bf0b8287df1fe6a21.mockapi.io/users/";
 
 const getId = document.getElementById("inputGet1Id");
 const postName = document.getElementById("inputPostNombre");
-const postLastname = document.getElementById("inputPostApellido");
+const postLastName = document.getElementById("inputPostApellido");
 const putId = document.getElementById("inputPutId");
 const deleteId = document.getElementById("inputDelete");
 
-let datos ={
-     name: "getId.value" 
-}
 
 const btnGet = document.getElementById("btnGet1");
 const btnPost = document.getElementById("btnPost");
@@ -16,6 +13,8 @@ const btnPut = document.getElementById("btnPut");
 const btnDel = document.getElementById("inputDelete");
 
 const result = document.getElementById("results");
+
+
 
 btnGet.addEventListener("click", async ()=>{
     const response = await fetch(URL + getId.value);
@@ -30,12 +29,34 @@ btnGet.addEventListener("click", async ()=>{
         showObject(data);
     }
 });
+
+async function getData(){
+    const response = await fetch(URL);
+    const info = await response.json();
+    showObject(info);
+};
+
 function showObject(object){
     for (const key in object){
         result.innerHTML += `<p><strong>${key}:</strong> ${object[key]}</p>`;
     }
 }
 
-btnPost.addEventListener("click", async () =>{
-    const response = await fetch(URL)
+btnPost.addEventListener("click", async ()=>{
+    let datos ={
+        "name": postName.value,
+        "last_name": postLastName.value,
+       };
+       
+    const response = await fetch(URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos),
+    });
+    if (response.ok){
+      postName.value="";
+      postLastName.value="";
+      getData()
+    }
 })
