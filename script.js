@@ -10,7 +10,7 @@ const deleteId = document.getElementById("inputDelete");
 const btnGet = document.getElementById("btnGet1");
 const btnPost = document.getElementById("btnPost");
 const btnPut = document.getElementById("btnPut");
-const btnDel = document.getElementById("inputDelete");
+const btnDel = document.getElementById("btnDelete");
 
 const result = document.getElementById("results");
 
@@ -59,4 +59,9 @@ btnPost.addEventListener("click", async ()=>{
       postLastName.value="";
       getData()
     }
+})
+btnDel.addEventListener("click", async()=>{
+    const response = await fetch (URL+deleteId.value,{
+        method: "DELETE",
+        headers: {'Content-Type': 'application/json'},
 })
