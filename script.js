@@ -80,6 +80,7 @@ btnPost.addEventListener("click", async ()=>{
       postLastName.value="";
       let data = await response.json();
         console.log(data);
+        result.innerHTML="";
         getData();
     }
 });
@@ -90,5 +91,10 @@ btnDel.addEventListener("click", async()=>{
     const response = await fetch (URL+deleteId.value,{
         method: "DELETE",
         headers: {'Content-Type': 'application/json'},
-     })
-})
+     });
+     if (response.ok){
+        let data = await response.json();
+        result.innerHTML="";
+        getData();
+     }
+});
