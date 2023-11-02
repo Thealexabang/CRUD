@@ -14,7 +14,26 @@ const btnDel = document.getElementById("btnDelete");
 
 const result = document.getElementById("results");
 
+document.addEventListener("input", ()=> {
+    if (postName !="" || postLastName !=""){
+        btnPost.disabled = false;
+    } else {
+        btnPost.disabled=true}
+});
 
+document.addEventListener("input", ()=> {
+    if(putId !=""){
+        btnPut.disabled = false;
+    } else {
+        btnPut.disabled=true}
+});
+
+document.addEventListener("input", ()=> {
+    if(deleteId !=""){
+        btnDel.disabled = false;
+    } else {
+        btnDel.disabled=true}
+});
 
 btnGet.addEventListener("click", async ()=>{
     const response = await fetch(URL + getId.value);
@@ -33,7 +52,9 @@ btnGet.addEventListener("click", async ()=>{
 async function getData(){
     const response = await fetch(URL);
     const info = await response.json();
-    showObject(info);
+    info.forEach(element => {
+        showObject(element);
+    });
 };
 
 function showObject(object){
@@ -57,11 +78,17 @@ btnPost.addEventListener("click", async ()=>{
     if (response.ok){
       postName.value="";
       postLastName.value="";
-      getData()
+      let data = await response.json();
+        console.log(data);
+        getData();
     }
-})
+});
+
+
+
 btnDel.addEventListener("click", async()=>{
     const response = await fetch (URL+deleteId.value,{
         method: "DELETE",
         headers: {'Content-Type': 'application/json'},
+     })
 })
